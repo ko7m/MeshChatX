@@ -15,7 +15,7 @@ assistant's own report, the saved terminal logs (`terminals/910718.txt` and
 | [01-build-from-source.md](01-build-from-source.md) | The full sequence that worked, start to finish |
 | [02-toolchain-prerequisites.md](02-toolchain-prerequisites.md) | Toolchain and system packages: what is needed and where it comes from |
 | [03-tinygo-required-for-frontend.md](03-tinygo-required-for-frontend.md) | `build-frontend` needs TinyGo, which the bootstrap script does not install |
-| [04-build-hung-machine.md](04-build-hung-machine.md) | The frontend build hung a 7 GB machine, which then rebooted |
+| [04-build-hung-machine.md](04-build-hung-machine.md) | The frontend build hung a 7 GB machine (reboot), and later systemd-oomd killed the terminal; the fix is memory-capped scopes |
 | [05-micron-wasm-fetch-deletes-artifacts.md](05-micron-wasm-fetch-deletes-artifacts.md) | A failed fetch of the micron WASM deleted the vendored files |
 | [06-build-dirties-tracked-files.md](06-build-dirties-tracked-files.md) | The build rewrites tracked files and leaves `.cache/` untracked |
 | [07-relocated-checkout-breaks-toolchain.md](07-relocated-checkout-breaks-toolchain.md) | After the rsync, `.cache/` and `.venv/` point at the old path |

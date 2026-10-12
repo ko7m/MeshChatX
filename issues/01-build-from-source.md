@@ -16,6 +16,12 @@ The versions are pinned in `scripts/ci/versions.env`. The run took about 5
 minutes, most of it spent downloading Go modules for `task`. See
 [02](02-toolchain-prerequisites.md).
 
+> **On a machine with about 8 GB of RAM or less** (for example m93p), run each
+> step below under a memory-capped `systemd-run` scope, as described in
+> [04](04-build-hung-machine.md). Otherwise systemd-oomd may kill the whole
+> terminal. Also skip step 2 and copy the WASM from a bigger machine instead,
+> as described in [03](03-tinygo-required-for-frontend.md).
+
 ## 2. Install TinyGo 0.42.0 (needed by `build-frontend`)
 
 The bootstrap script does not install TinyGo; see [03](03-tinygo-required-for-frontend.md).

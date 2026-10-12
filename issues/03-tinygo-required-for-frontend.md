@@ -40,6 +40,30 @@ or `GEO_GO_WASM_EXEC`.
 - `MESHCHATX_REQUIRE_VISUALISER_WASM=1` and `MESHCHATX_REQUIRE_GEO_WASM=1`
   do the opposite: they make a missing TinyGo a hard error.
 
+## Alternative: copy the WASM from a machine that already built it
+
+`visualiser.wasm`, `geo.wasm` and their `wasm_exec.js` files are gitignored,
+but the `integrity.json` files committed to the repo hold their SRI hashes.
+If another machine has already built the same commit with TinyGo 0.42.0, copy
+the files across and skip TinyGo completely. This is what got m93p working on
+2026-10-12:
+
+```bash
+V=meshchatx/src/frontend/public/vendor
+for d in visualiser-wasm geo-wasm; do
+  scp "m55p:git/MeshChatX/$V/$d/*.wasm" "m55p:git/MeshChatX/$V/$d/wasm_exec.js" "$V/$d/"
+done
+VISUALISER_WASM_SKIP=1 GEO_WASM_SKIP=1 pnpm run build-frontend
+```
+
+Don't write this as `"$d/{*.wasm,wasm_exec.js}"`. Modern OpenSSH `scp` uses
+the SFTP protocol, which expands `*` but not `{a,b}` braces. The brace form
+fails with "No such file or directory".
+
+If the files are missing and the skip flags are set, the build still
+succeeds. The network visualiser and the map then use their slower JS
+fallbacks.
+
 ## Possible upstream improvement
 
 Add `TINYGO_VERSION=0.42.0` to `scripts/ci/versions.env`, and have
